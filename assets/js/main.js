@@ -88,6 +88,19 @@
     });
   }
 
+  /* 모바일: 장비 그림을 '장비 구성 문의' 버튼 바로 아래로(버튼과 44px 띄움). 그림 위쪽 44%는 뒷벽이라 그만큼 겹쳐 올림 */
+  function placeDevMobile() {
+    const ds = $(".dev-stage"), act = $(".hero-slide[data-photo] .hero-actions");
+    if (!ds || !act) return;
+    if (innerWidth > 760) { ds.style.top = ""; ds.style.bottom = ""; return; }
+    let y = 0, el = act; while (el && el !== heroBox) { y += el.offsetTop; el = el.offsetParent; }
+    ds.style.bottom = "auto";
+    ds.style.top = Math.round(y + act.offsetHeight + 44 - ds.offsetHeight * 0.44) + "px";
+  }
+  addEventListener("resize", placeDevMobile);
+  addEventListener("load", placeDevMobile);
+  placeDevMobile();
+
   /* 장비 무대: 마우스 시차(가까운 장비일수록 더 크게) */
   const devStage = $(".dev-stage");
   if (devStage && !reduce && matchMedia("(pointer:fine)").matches) {
