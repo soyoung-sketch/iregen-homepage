@@ -42,7 +42,7 @@
   $$("[data-reveal]").forEach(el => revObs.observe(el));
 
   /* ---------- 히어로 슬라이드 ---------- */
-  const slides = $$(".hero-slide"), bar = $(".hero-bar i"), cur = $(".hero-count .cur");
+  const slides = $$(".hero-slide"), bar = $(".hero-bar i"), cur = $(".hero-count .cur"), heroBox = $(".hero");
   const DUR = 6500;
   let idx = 0, playing = !reduce, t0 = performance.now(), paused = 0;
   function go(n) {
@@ -52,6 +52,7 @@
     setTimeout(() => prev.classList.remove("is-leaving"), 500);
     idx = (n + slides.length) % slides.length;
     slides[idx].classList.add("is-active");
+    heroBox.classList.toggle("photo-on", slides[idx].hasAttribute("data-photo"));
     cur.textContent = String(idx + 1).padStart(2, "0");
     t0 = performance.now(); paused = 0;
   }

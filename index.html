@@ -11,7 +11,7 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=5">
 </head>
 <body>
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -47,6 +47,7 @@
 <main>
 <!-- ============ 히어로 ============ -->
 <section class="hero" aria-label="아이리젠 소개">
+  <div class="hero-photo" aria-hidden="true"><picture><source media="(max-width: 760px)" srcset="assets/img/hero-devices-sm.webp"><img src="assets/img/hero-devices.webp" alt="" width="2560" height="1440" decoding="async"></picture></div>
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="hero-orb o1" aria-hidden="true"></div>
   <div class="hero-orb o2" aria-hidden="true"></div>
@@ -59,21 +60,28 @@
         <div class="hero-tags"><span class="tag">ERP</span><span class="tag">POS</span><span class="tag">PDA</span><span class="tag">PDM</span><span class="tag">SCM</span><span class="tag">ESL</span><span class="tag">KIOSK</span><span class="tag">ONLINE · 배송</span></div>
         <div class="hero-actions"><a href="#contact" class="btn btn-primary">도입 문의하기 <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="#lineup" class="btn btn-ghost">솔루션 둘러보기</a></div>
       </div>
-      <div class="hero-slide" data-slide="1">
+      <div class="hero-slide" data-slide="1" data-photo>
+        <span class="eyebrow">iREGEN DEVICES</span>
+        <h2 class="h-display"><span class="line"><span>POS부터 키오스크까지,</span></span><span class="line"><span>장비도 <span class="grad-text">아이리젠</span>으로</span></span></h2>
+        <p class="lead">POS · 키오스크 · PDA · PDM · 카드 단말기.<br>IRM과 바로 이어지는 장비로 매장을 한 번에 갖춥니다.</p>
+        <div class="hero-tags"><span class="tag">POS</span><span class="tag">키오스크</span><span class="tag">PDA</span><span class="tag">PDM</span><span class="tag">카드 단말기</span></div>
+        <div class="hero-actions"><a href="#contact" class="btn btn-primary">장비 구성 문의 <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="#products" class="btn btn-ghost">제품 둘러보기</a></div>
+      </div>
+      <div class="hero-slide" data-slide="2">
         <span class="eyebrow">FOR FOOD-SERVICE MARTS</span>
         <h2 class="h-display"><span class="line"><span>대량 입고·소분·배송,</span></span><span class="line"><span><span class="grad-text">식자재마트</span>도 하나로</span></span></h2>
         <p class="lead">수백 곳의 매입처, 수천 개의 상품, 업소 배송까지.<br>규모가 커질수록 아이리젠은 더 단단해집니다.</p>
         <div class="hero-tags"><span class="tag">자동발주</span><span class="tag">PDA 검수</span><span class="tag">소분·라벨</span><span class="tag">업소 배송</span></div>
         <div class="hero-actions"><a href="#industry" class="btn btn-primary" data-ind="0">식자재마트 구성 보기 <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
       </div>
-      <div class="hero-slide" data-slide="2">
+      <div class="hero-slide" data-slide="3">
         <span class="eyebrow">FOR LARGE PHARMACIES</span>
         <h2 class="h-display"><span class="line"><span>복잡한 대형약국 운영,</span></span><span class="line"><span><span class="grad-text">더 단순하게</span></span></span></h2>
         <p class="lead">많은 품목과 잦은 가격 변경, 관광객 환급까지.<br>계산대부터 매대 가격표까지 한 번에 맞춰 둡니다.</p>
         <div class="hero-tags"><span class="tag">POS</span><span class="tag">ESL 가격 연동</span><span class="tag">택스리펀</span><span class="tag">재고 조사</span></div>
         <div class="hero-actions"><a href="#industry" class="btn btn-primary" data-ind="1">대형약국 구성 보기 <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
       </div>
-      <div class="hero-slide" data-slide="3">
+      <div class="hero-slide" data-slide="4">
         <span class="eyebrow">FOR EVERY STORE</span>
         <h2 class="h-display"><span class="line"><span>작은 가게부터</span></span><span class="line"><span><span class="grad-text">프랜차이즈 본사</span>까지</span></span></h2>
         <p class="lead">필요한 만큼 골라 시작하고, 커지는 만큼 더해 가세요.<br>어떤 업종이든 같은 구조로 함께 자랍니다.</p>
@@ -101,7 +109,7 @@
   </div>
 
   <div class="hero-ctrl">
-    <span class="hero-count"><b class="cur">01</b> / 04</span>
+    <span class="hero-count"><b class="cur">01</b> / 05</span>
     <span class="hero-bar"><i></i></span>
     <div class="hero-btns">
       <button class="icon-btn" data-hero="prev" aria-label="이전 슬라이드"><svg viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -431,6 +439,6 @@
   <a href="#contact" class="btn btn-primary">상담 신청하기</a>
 </aside>
 
-<script src="assets/js/main.js"></script>
+<script src="assets/js/main.js?v=5"></script>
 </body>
 </html>
