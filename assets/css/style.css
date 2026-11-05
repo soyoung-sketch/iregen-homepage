@@ -116,14 +116,23 @@ body.nav-open .mnav { transform: none; }
 .hero { position: relative; min-height: 100vh; min-height: 100svh; background: radial-gradient(1200px 700px at 78% 20%, rgba(52,97,255,.35), transparent 60%), radial-gradient(900px 600px at 10% 90%, rgba(25,195,245,.18), transparent 60%), var(--navy); color: #fff; overflow: hidden; display: flex; align-items: center; }
 /* 실물 장비 배너(두 번째 슬라이드): 3D 렌더 그림이 첫 화면 전체 배경이 됨 */
 .hero-photo { position: absolute; inset: 0; z-index: 1; opacity: 0; transition: opacity 1.1s var(--ease); pointer-events: none; background: linear-gradient(180deg, #0A1533, #050A1C); }
-.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 72% 77%; transform: scale(1.07); transition: transform 7s cubic-bezier(.2,.6,.2,1); }
 .hero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5,10,28,.92) 0%, rgba(5,10,28,.62) 34%, rgba(5,10,28,0) 62%), linear-gradient(0deg, rgba(5,10,28,.55), transparent 30%); }
 .hero.photo-on .hero-photo { opacity: 1; }
-.hero.photo-on .hero-photo img { transform: scale(1); }
-/* 16:9 보다 넓은 화면(울트라와이드 등): 그림을 자르지 않고 오른쪽 아래에 통째로 — 키오스크 윗부분이 메뉴 줄에 닿지 않게(사용자 11-05) */
-@media (min-aspect-ratio: 16/9) and (min-width: 761px) { .hero-photo img { object-fit: contain; object-position: 100% 100%; } }
 .hero .stage { transition: opacity .7s var(--ease), transform .9s var(--ease); }
 .hero.photo-on .stage { opacity: 0; transform: scale(.94); pointer-events: none; }
+/* 장비 무대: 16:9 판. 높이를 첫 화면에 맞추고 오른쪽 아래에 붙임 → 넓은 화면은 통째로, 좁은 화면은 왼쪽이 잘림. 9% 위로(장비 아래 끝이 버튼 줄·띠에 걸리지 않게) */
+.dev-stage { position: absolute; right: 0; bottom: 0; height: 100%; aspect-ratio: 16 / 9; transform: translateY(-9%); --px: 0; --py: 0; -webkit-mask-image: linear-gradient(180deg, #000 86%, transparent 100%); mask-image: linear-gradient(180deg, #000 86%, transparent 100%); }
+.dev-bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.dev { position: absolute; left: var(--l); top: var(--t); width: var(--w); opacity: 0; transform: translateY(70px) scale(.94); transform-origin: 50% 100%; translate: calc(var(--px) * var(--depth) * 1px) calc(var(--py) * var(--depth) * 1px); transition: opacity .6s ease, transform .7s var(--ease), translate .5s ease-out; }
+.dev img { display: block; width: 100%; height: auto; }
+.hero.photo-on .dev { opacity: 1; transform: none; transition: opacity 1s ease calc(var(--i) * 120ms + 250ms), transform 1.3s var(--ease) calc(var(--i) * 120ms + 250ms), translate .5s ease-out; }
+.hero.photo-on .dev img { animation: devFloat var(--fd) ease-in-out var(--fdl) infinite; }
+@keyframes devFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+/* 빛 훑기: 장비 모양(자기 그림)으로 가린 흰 띠가 왼쪽에서 오른쪽으로 */
+.dev::after { content: ""; position: absolute; inset: 0; -webkit-mask: var(--m) center / 100% 100% no-repeat; mask: var(--m) center / 100% 100% no-repeat; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.26) 50%, transparent 60%); background-size: 300% 100%; background-position: 130% 0; opacity: 0; pointer-events: none; }
+.hero.photo-on .dev::after { animation: devSheen 7s ease-in-out calc(1.6s + var(--sd) * 140ms) infinite; }
+@keyframes devSheen { 0% { background-position: 130% 0; opacity: 0; } 6% { opacity: 1; } 24% { background-position: -30% 0; opacity: 1; } 30%, 100% { background-position: -30% 0; opacity: 0; } }
+
 @media (min-width: 1025px) { .hero-slide[data-photo] { width: 150%; } }
 .hero.photo-on .hero-orb, .hero.photo-on .hero-grid { opacity: 0; }
 .hero-orb, .hero-grid { transition: opacity .9s; }
@@ -517,11 +526,12 @@ body.nav-open .mnav { transform: none; }
   .cta-box { padding: 64px 36px 56px; }
   .cta-box .mascot { right: 24px; top: -70px; width: 110px; }
 }
+@media (min-width: 761px) and (max-width: 1024px) { .dev-stage { height: auto; width: 125%; right: -8%; bottom: 40px; transform: none; } }
 @media (max-width: 760px) {
   .container { padding: 0 20px; }
   .hero-photo { background: #08102b; }
-  .hero-photo picture { position: absolute; right: -11%; bottom: 80px; width: 160%; -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%); mask-image: linear-gradient(180deg, transparent 0%, #000 22%); }
-  .hero-photo img { height: auto; object-fit: contain; }
+  .dev-stage { right: -11%; bottom: 80px; height: auto; width: 160%; transform: none; -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%); mask-image: linear-gradient(180deg, transparent 0%, #000 22%); }
+  .dev { transform: translateY(40px) scale(.96); }
   .hero-photo::after { background: linear-gradient(180deg, rgba(5,10,28,.96) 0%, rgba(5,10,28,.8) 42%, rgba(5,10,28,0) 64%); }
   .section { padding: 84px 0; }
   .hero .container { padding-top: calc(var(--hdr) + 18px); }

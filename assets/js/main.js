@@ -88,6 +88,16 @@
     });
   }
 
+  /* 장비 무대: 마우스 시차(가까운 장비일수록 더 크게) */
+  const devStage = $(".dev-stage");
+  if (devStage && !reduce && matchMedia("(pointer:fine)").matches) {
+    $(".hero").addEventListener("mousemove", e => {
+      if (!heroBox.classList.contains("photo-on")) return;
+      devStage.style.setProperty("--px", ((e.clientX / innerWidth - 0.5) * -18).toFixed(2));
+      devStage.style.setProperty("--py", ((e.clientY / innerHeight - 0.5) * -10).toFixed(2));
+    });
+  }
+
   /* ---------- 솔루션 허브 ---------- */
   const PRODUCTS = [
     { key: "irm", code: "IRM · INTEGRATED ERP", name: "IRM", sub: "통합 운영", title: "매장 운영의 중심, 통합 운영 시스템", desc: "상품부터 매입·매출·재고·매장·통계까지 매장 운영에 필요한 모든 데이터를 한곳에서 관리합니다. 다른 솔루션은 모두 IRM으로 이어집니다.", feats: ["상품·매입·매출·재고를 한 화면에서", "본사 상품 연동과 가격·상태 변경 공지", "점간 이동·자가사용·폐기·소분 관리", "매출·매입·순위 통계로 매장 비교"], who: ["식자재마트", "대형약국", "다점포 본사", "소형 매장"], img: "c11_laptop" },
