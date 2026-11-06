@@ -370,14 +370,57 @@
   placeTop();
 
   /* ---------- 문의 남기기 (11-06) ----------
-     받는 주소: index.html 의 <form id="inquiry" data-api="…"> 에 넣으면 그리로 POST(JSON) 합니다.
-     보내는 값: company, name, phone, email, products[], message, agree, page, sentAt — 서버가 2xx 를 돌려주면 '접수됐어요' 화면.
-     주소가 비어 있으면 메일 앱(help@iregen.co.kr)을 열어 같은 내용을 채웁니다. */
+     상담 신청 등록 API(home_inquiry_api.md): <form id="inquiry" data-api="주소" data-key="ApiKey" data-source="HOME">
+     보내는 값(multipart/form-data, Content-Type 은 브라우저가 붙임):
+       CompanyName · ContactName · Phone · Email · Title(관심 솔루션) · Content(문의 내용 + 관심 솔루션) · SourceSite · Website(봇 칸, 비움) · file(첨부 0~5개)
+     답: body.Table[0].Ret — 0 접수(InquiryId) / -1·-22·-23·-24 는 MsgKr 그대로 / 그 밖·통신 실패는 '못 보냄' + 메일로 보내기
+     data-api 가 비어 있으면 메일 앱(help@iregen.co.kr)을 열어 같은 내용을 채웁니다. */
   const inq = $("#inquiry");
   if (inq) {
     const say = $(".inq-msg", inq), ta = inq.elements.message, cnt = $(".cnt", inq), send = $(".inq-send", inq);
     const sendHTML = send.innerHTML;
     ta.addEventListener("input", () => { cnt.textContent = `${ta.value.length} / 1000`; });
+
+    /* 파일 첨부 — 서버 규칙과 같게 먼저 걸러 냄(받는 형식 · 5개 · 파일당 20MB · 합쳐서 50MB) */
+    const OK_EXT = "pdf hwp hwpx doc docx pptx xls xlsx csv txt jpg jpeg png gif webp bmp zip".split(" ");
+    const MAX_N = 5, MAX_ONE = 20 * 1024 * 1024, MAX_ALL = 50 * 1024 * 1024;
+    const fileIn = inq.elements.file, attList = $(".att-list", inq), attErr = $(".att-err", inq), att = $(".att", inq);
+    let files = [];
+    const size = b => b < 1024 * 1024 ? `${Math.max(1, Math.round(b / 1024))}KB` : `${(b / 1024 / 1024).toFixed(1)}MB`;
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const drawFiles = () => {
+      attList.innerHTML = files.map((f, i) => `<li><span class="nm" title="${esc(f.name)}">${esc(f.name)}</span><em>${size(f.size)}</em><button type="button" data-i="${i}" aria-label="${esc(f.name)} 빼기">×</button></li>`).join("");
+      att.classList.toggle("has", files.length > 0);
+    };
+    const addFiles = list => {
+      const bad = [];
+      for (const f of list) {
+        const ext = (f.name.split(".").pop() || "").toLowerCase();
+        if (files.some(g => g.name === f.name && g.size === f.size)) continue;           // 같은 파일 두 번
+        if (!f.name.includes(".") || !OK_EXT.includes(ext)) bad.push(ext === "ppt" ? `${f.name}(ppt 는 pptx 로 저장해 주세요)` : `${f.name}(보낼 수 없는 형식)`);
+        else if (f.size > MAX_ONE) bad.push(`${f.name}(20MB 넘음)`);
+        else if (files.length >= MAX_N) bad.push(`${f.name}(5개까지)`);
+        else if (files.reduce((s, g) => s + g.size, 0) + f.size > MAX_ALL) bad.push(`${f.name}(합쳐서 50MB 넘음)`);
+        else files.push(f);
+      }
+      attErr.textContent = bad.length ? `빼 둔 파일: ${bad.join(", ")}` : "";
+      drawFiles();
+    };
+    fileIn.addEventListener("change", () => { addFiles(fileIn.files); fileIn.value = ""; });
+    attList.addEventListener("click", e => {
+      const b = e.target.closest("button[data-i]"); if (!b) return;
+      files.splice(+b.dataset.i, 1); attErr.textContent = ""; drawFiles(); fileIn.focus();
+    });
+    const drop = $(".f-msg", inq);
+    ["dragenter", "dragover"].forEach(t => drop.addEventListener(t, e => {
+      if (![...(e.dataTransfer?.types || [])].includes("Files")) return;
+      e.preventDefault(); drop.classList.add("drag");
+    }));
+    ["dragleave", "drop"].forEach(t => drop.addEventListener(t, e => {
+      if (t === "dragleave" && drop.contains(e.relatedTarget)) return;
+      drop.classList.remove("drag");
+    }));
+    drop.addEventListener("drop", e => { if (e.dataTransfer?.files?.length) { e.preventDefault(); addFiles(e.dataTransfer.files); } });
     $(".more", inq).addEventListener("click", e => {
       const t = $(".agree-text", inq); t.hidden = !t.hidden;
       e.currentTarget.setAttribute("aria-expanded", String(!t.hidden));
@@ -386,7 +429,7 @@
     const rules = {
       company: el => el.value.trim() ? "" : "회사·매장명을 적어 주세요.",
       name: el => el.value.trim() ? "" : "담당자 이름을 적어 주세요.",
-      phone: el => { const d = el.value.replace(/\D/g, ""); return /^[0-9+\-\s()]+$/.test(el.value.trim()) && d.length >= 9 && d.length <= 13 ? "" : "연락처를 확인해 주세요."; },
+      phone: el => { const d = el.value.replace(/\D/g, ""); return /^[0-9+\-\s()]+$/.test(el.value.trim()) && d.length >= 8 && d.length <= 15 ? "" : "연락처를 확인해 주세요."; },
       email: el => !el.value.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()) ? "" : "이메일 주소를 확인해 주세요.",
       message: el => el.value.trim().length >= 5 ? "" : "문의 내용을 5자 이상 적어 주세요.",
       agree: el => el.checked ? "" : "개인정보 수집·이용에 동의해 주세요.",
@@ -396,7 +439,11 @@
       box.classList.toggle("err", !!err);
       el.setAttribute("aria-invalid", err ? "true" : "false");
       let m = box.querySelector(":scope > .msg");
-      if (!m) { m = document.createElement("small"); m.className = "msg"; box.appendChild(m); }
+      if (!m) {
+        m = document.createElement("small"); m.className = "msg";
+        const ta2 = box.querySelector(":scope > .ta");             // 문의 내용은 입력칸 바로 아래(첨부 줄 위)
+        ta2 ? ta2.after(m) : box.appendChild(m);
+      }
       m.textContent = err;
       return !err;
     };
@@ -405,36 +452,69 @@
       el.addEventListener(el.type === "checkbox" ? "change" : "blur", () => { if (el.type === "checkbox" || el.value) check(el); });
       el.addEventListener("input", () => { if (el.closest(".err")) check(el); });
     });
+    const mailOpen = d => {   // 메일 앱으로 같은 내용(첨부는 메일에 직접)
+      const body = `회사·매장명: ${d.company}\n담당자: ${d.name}\n연락처: ${d.phone}\n이메일: ${d.email || "-"}\n관심 솔루션: ${d.products.join(", ") || "-"}\n\n${d.message}\n\n(개인정보 수집·이용 동의함 · 홈페이지 문의 남기기)`
+        + (files.length ? `\n(첨부할 파일: ${files.map(f => f.name).join(", ")} — 이 메일에 직접 붙여 주세요)` : "");
+      location.href = `mailto:help@iregen.co.kr?subject=${encodeURIComponent("[홈페이지 문의] " + d.company)}&body=${encodeURIComponent(body)}`;
+    };
+    let last = null, busy = false;
+    say.addEventListener("click", e => { if (e.target.closest(".mail") && last) { e.preventDefault(); mailOpen(last); } });
+    const fail = (text, mail) => {
+      say.className = "inq-msg bad";
+      say.innerHTML = esc(text) + (mail ? ` <button type="button" class="mail">메일로 보내기</button>` : "");
+    };
     inq.addEventListener("submit", async e => {
       e.preventDefault();
-      if (inq.elements.website.value) return;              // 자동 등록 막기(사람 눈엔 안 보이는 칸)
+      if (busy) return;
       let first = null;
       Object.keys(rules).forEach(n => { const el = inq.elements[n]; if (!check(el) && !first) first = el; });
-      if (first) { first.focus(); say.textContent = "빨간 칸을 확인해 주세요."; say.className = "inq-msg bad"; return; }
-      const API = (inq.dataset.api || "").trim();   // 보낼 때마다 읽음
+      if (first) { first.focus(); fail("빨간 칸을 확인해 주세요."); return; }
       const v = n => inq.elements[n].value.trim();
-      const data = {
+      const d = last = {
         company: v("company"), name: v("name"), phone: v("phone"), email: v("email"),
-        products: $$("input[name=products]:checked", inq).map(c => c.value),
-        message: v("message"), agree: true, page: location.href, sentAt: new Date().toISOString(),
+        products: $$("input[name=products]:checked", inq).map(c => c.value), message: v("message"),
       };
-      if (!API) {
-        const body = `회사·매장명: ${data.company}\n담당자: ${data.name}\n연락처: ${data.phone}\n이메일: ${data.email || "-"}\n관심 솔루션: ${data.products.join(", ") || "-"}\n\n${data.message}\n\n(개인정보 수집·이용 동의함 · 홈페이지 문의 남기기)`;
-        location.href = `mailto:help@iregen.co.kr?subject=${encodeURIComponent("[홈페이지 문의] " + data.company)}&body=${encodeURIComponent(body)}`;
-        say.textContent = "메일 앱이 열리면 [보내기]를 눌러 주세요."; say.className = "inq-msg";
-        return;
-      }
-      send.disabled = true; send.textContent = "보내는 중…"; say.textContent = ""; say.className = "inq-msg";
+      if (inq.elements.Website.value) { inq.classList.add("done"); return; }   // 자동 등록(사람 눈엔 안 보이는 칸) — 보내지 않고 끝난 척
+      const API = (inq.dataset.api || "").trim();   // 보낼 때마다 읽음
+      if (!API) { mailOpen(d); say.className = "inq-msg"; say.textContent = "메일 앱이 열리면 [보내기]를 눌러 주세요."; return; }
+
+      const fd = new FormData();
+      fd.append("CompanyName", d.company);
+      fd.append("ContactName", d.name);
+      fd.append("Phone", d.phone);
+      if (d.email) fd.append("Email", d.email);
+      fd.append("Title", d.products.length ? `도입 상담 (${d.products.join(", ")})` : "도입 상담");
+      fd.append("Content", d.message + (d.products.length ? `\n\n관심 솔루션: ${d.products.join(", ")}` : ""));
+      fd.append("SourceSite", inq.dataset.source || "HOME");
+      fd.append("Website", "");
+      files.forEach(f => fd.append("file", f, f.name));
+
+      busy = true; send.disabled = true; send.textContent = files.length ? "파일 올리는 중…" : "보내는 중…";
+      say.textContent = ""; say.className = "inq-msg";
+      const stop = new AbortController(), timer = setTimeout(() => stop.abort(), files.length ? 180000 : 30000);
       try {
-        const r = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        inq.classList.add("done");
+        const r = await fetch(API, { method: "POST", headers: { ApiKey: inq.dataset.key || "" }, body: fd, signal: stop.signal });
+        let row = null;
+        try { const j = await r.json(); row = j && j.body && j.body.Table && j.body.Table[0]; } catch (_) { /* JSON 아님 */ }
+        const ret = row ? Number(row.Ret) : NaN;
+        if (ret === 0) {
+          $(".inq-no", inq).textContent = row.InquiryId != null ? `접수 번호 ${row.InquiryId}` : "";
+          inq.classList.add("done");
+          files = []; drawFiles();
+        } else if ([-1, -22, -23, -24].includes(ret) && row.MsgKr) {
+          fail(row.MsgKr, ret === -24);
+        } else {
+          if (window.console) console.warn("문의 보내기 실패", r.status, row);
+          fail("지금은 보내지 못했어요. 잠시 뒤 다시 보내 주시거나 070-4152-3621 로 전화해 주세요.", true);
+        }
       } catch (err) {
-        say.textContent = "보내지 못했어요. 잠시 뒤 다시 보내 주시거나 070-4152-3621 로 전화해 주세요."; say.className = "inq-msg bad";
-      } finally { send.disabled = false; send.innerHTML = sendHTML; }
+        fail(err && err.name === "AbortError" ? "응답이 너무 늦어요. 잠시 뒤 다시 보내 주시거나 070-4152-3621 로 전화해 주세요."
+          : "보내지 못했어요. 인터넷 연결을 확인하고 다시 보내 주시거나 070-4152-3621 로 전화해 주세요.", true);
+      } finally { clearTimeout(timer); busy = false; send.disabled = false; send.innerHTML = sendHTML; }
     });
     $(".inq-again", inq).addEventListener("click", () => {
-      inq.reset(); cnt.textContent = "0 / 1000"; say.textContent = ""; inq.classList.remove("done");
+      inq.reset(); cnt.textContent = "0 / 1000"; say.textContent = ""; say.className = "inq-msg"; inq.classList.remove("done");
+      files = []; drawFiles(); attErr.textContent = ""; $(".inq-no", inq).textContent = "";
       $$(".err", inq).forEach(b => b.classList.remove("err")); $$(".msg", inq).forEach(m => { m.textContent = ""; });
     });
   }
