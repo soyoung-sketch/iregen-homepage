@@ -498,7 +498,7 @@
         try { const j = await r.json(); row = j && j.body && j.body.Table && j.body.Table[0]; } catch (_) { /* JSON 아님 */ }
         const ret = row ? Number(row.Ret) : NaN;
         if (ret === 0) {
-          $(".inq-no", inq).textContent = row.InquiryId != null ? `접수 번호 ${row.InquiryId}` : "";
+          $(".inq-no", inq).textContent = Number(row.InquiryId) > 0 ? `접수 번호 ${row.InquiryId}` : "";   // 0 = 봇 칸 등으로 저장 안 됨
           inq.classList.add("done");
           files = []; drawFiles();
         } else if ([-1, -22, -23, -24].includes(ret) && row.MsgKr) {
