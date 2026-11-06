@@ -83,7 +83,7 @@
     const chips = $$(".chip3d", stage), core = $(".stage-core", stage);
     $(".hero").addEventListener("mousemove", e => {
       const x = e.clientX / innerWidth - 0.5, y = e.clientY / innerHeight - 0.5;
-      chips.forEach(c => { const d = +c.dataset.depth || 10; c.style.translate = `${-x * d * 2}px ${-y * d * 2}px`; });
+      chips.forEach(c => { const d = +c.dataset.depth || 10; c.style.translate = `calc(-50% + ${-x * d * 2}px) calc(-50% + ${-y * d * 2}px)`; });
       core.style.translate = `${x * 14}px ${y * 14}px`;
     });
   }

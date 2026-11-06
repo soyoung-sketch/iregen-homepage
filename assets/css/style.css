@@ -187,9 +187,25 @@ body.nav-open .mnav { transform: none; }
 .chip3d .ic svg { width: 20px; height: 20px; color: #fff; }
 .chip3d:nth-child(odd) .ic { background: linear-gradient(135deg, #10A6E0, var(--cyan)); }
 @keyframes floaty { 50% { transform: translateY(-10px); } }
-.chip3d.p1 { left: 2%; top: 14%; } .chip3d.p2 { left: 36%; top: 0; animation-delay: -1s; } .chip3d.p3 { right: 0; top: 16%; animation-delay: -2s; }
-.chip3d.p4 { right: -2%; top: 50%; animation-delay: -3s; } .chip3d.p5 { right: 10%; bottom: 6%; animation-delay: -4s; } .chip3d.p6 { left: 30%; bottom: 0; animation-delay: -2.5s; }
-.chip3d.p7 { left: -4%; bottom: 20%; animation-delay: -1.5s; } .chip3d.p8 { left: -2%; top: 45%; animation-delay: -3.5s; }
+/* 원형 배치 10개(11-06): 카드 가운데가 고리 위 36° 간격 — _작업/edit_orbit_1106.py */
+.stage .chip3d { translate: -50% -50%; }
+.chip3d.p1 { left: 24.7%; top: 14.4%; }
+.chip3d.p2 { left: 50.0%; top: 6.0%; animation-delay: -1s; }
+.chip3d.p3 { left: 75.3%; top: 14.4%; animation-delay: -2s; }
+.chip3d.p4 { left: 90.9%; top: 36.4%; animation-delay: -3s; }
+.chip3d.p5 { left: 75.3%; top: 85.6%; animation-delay: -4s; }
+.chip3d.p6 { left: 50.0%; top: 94.0%; animation-delay: -2.5s; }
+.chip3d.p7 { left: 24.7%; top: 85.6%; animation-delay: -1.5s; }
+.chip3d.p8 { left: 9.1%; top: 36.4%; animation-delay: -3.5s; }
+.chip3d.p9 { left: 90.9%; top: 63.6%; animation-delay: -0.5s; }
+.chip3d.p10 { left: 9.1%; top: 63.6%; animation-delay: -4.5s; }
+@media (max-width: 760px) { /* 휴대폰: 무대가 작아 위·아래 3개가 겹치지 않게 넓게 벌림, 화면 밖으로 안 나가게 */
+  .chip3d.p2 { left: 50%; top: 4%; } .chip3d.p6 { left: 50%; top: 95%; }
+  .chip3d.p1 { left: 20%; top: 15%; } .chip3d.p3 { left: 80%; top: 15%; }
+  .chip3d.p7 { left: 20%; top: 84%; } .chip3d.p5 { left: 80%; top: 84%; }
+  .chip3d.p8 { left: 11%; top: 38%; } .chip3d.p4 { left: 89%; top: 38%; }
+  .chip3d.p10 { left: 11%; top: 62%; } .chip3d.p9 { left: 89%; top: 62%; }
+}
 .stage svg.links { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .stage svg.links path { fill: none; stroke: rgba(130,170,255,.35); stroke-width: 1.2; stroke-dasharray: 4 8; animation: dash 3s linear infinite; }
 @keyframes dash { to { stroke-dashoffset: -48; } }
