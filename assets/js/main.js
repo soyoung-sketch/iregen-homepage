@@ -156,7 +156,7 @@
     PRODUCTS.forEach((p, i) => {
       const card = document.createElement("article");
       card.className = "hub-card" + (i === 0 ? " on" : "");
-      card.innerHTML = `<span class="code">${p.code}</span><h3>${p.title}</h3><p>${p.desc}</p><ul>${p.feats.map(f => `<li>${f}</li>`).join("")}</ul><div class="who">${p.who.map(w => `<span>${w}</span>`).join("")}</div><img class="mascot" src="assets/char/${p.img}.webp?v=2" alt="" loading="lazy">`;
+      card.innerHTML = `<span class="code">${p.code}</span><h3>${p.title}</h3><p>${p.desc}</p><ul>${p.feats.map(f => `<li>${f}</li>`).join("")}</ul><div class="who">${p.who.map(w => `<span>${w}</span>`).join("")}</div><img class="mascot" src="assets/char/${p.img}.webp?v=3" alt="" loading="lazy">`;
       hubPanel.appendChild(card);
     });
     const cards = $$(".hub-card", hubPanel), center = $(".hub-center", hubMap);
