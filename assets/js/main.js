@@ -335,10 +335,27 @@
 
   /* ---------- 떠 있는 상담 카드 ---------- */
   const pip = $(".pip");
-  let pipClosed = false;
-  try { pipClosed = sessionStorage.getItem("pipClosed") === "1"; } catch (e) {}
-  if (pipClosed) pip.classList.add("closed");
-  $(".x", pip).addEventListener("click", () => { pip.classList.add("closed"); try { sessionStorage.setItem("pipClosed", "1"); } catch (e) {} });
+  // X 로 닫으면 이번 화면에서만 숨김 — 새로고침(F5)하면 다시 나옴(11-06)
+  try { sessionStorage.removeItem("pipClosed"); } catch (e) {}
+  $(".x", pip).addEventListener("click", () => { pip.classList.add("closed"); placeTop(); });
+
+  /* ---------- 맨 위로: 상담 카드가 보이면 캐릭터 얼굴 왼쪽, 아니면 오른쪽 아래 ---------- */
+  const toTop = $(".to-top"), pipImg = $("img", pip);
+  function placeTop() {
+    if (!toTop) return;
+    toTop.classList.toggle("show", scrollY > innerHeight * 0.8);
+    const on = pip.classList.contains("show") && !pip.classList.contains("closed");
+    if (!on) { toTop.style.right = ""; toTop.style.bottom = ""; return; }
+    // 움직이는 중(transform)과 상관없이 자리 계산: 카드의 고정 위치 + 그림의 offset
+    const cs = getComputedStyle(pip), cw = document.documentElement.clientWidth, ch = innerHeight;
+    const pl = cw - parseFloat(cs.right) - pip.offsetWidth, pt = ch - parseFloat(cs.bottom) - pip.offsetHeight;
+    const il = pl + pipImg.offsetLeft, face = pt + pipImg.offsetTop + pipImg.offsetHeight * 0.36;
+    const sz = toTop.offsetWidth || 48;
+    toTop.style.right = Math.round(cw - il + 8) + "px";
+    toTop.style.bottom = Math.round(ch - face - sz / 2) + "px";
+  }
+  if (toTop) toTop.addEventListener("click", () => scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }));
+  addEventListener("resize", placeTop);
   const heroEl = $(".hero"), ctaEl = $("#contact");
   const pipObs = new IntersectionObserver(() => {
     const hr = heroEl.getBoundingClientRect(), cr = ctaEl.getBoundingClientRect();
@@ -348,7 +365,79 @@
   addEventListener("scroll", () => {
     const hr = heroEl.getBoundingClientRect(), cr = ctaEl.getBoundingClientRect();
     pip.classList.toggle("show", hr.bottom < innerHeight * 0.3 && cr.top > innerHeight * 0.7);
+    placeTop();
   }, { passive: true });
+  placeTop();
+
+  /* ---------- 문의 남기기 (11-06) ----------
+     받는 주소: index.html 의 <form id="inquiry" data-api="…"> 에 넣으면 그리로 POST(JSON) 합니다.
+     보내는 값: company, name, phone, email, products[], message, agree, page, sentAt — 서버가 2xx 를 돌려주면 '접수됐어요' 화면.
+     주소가 비어 있으면 메일 앱(help@iregen.co.kr)을 열어 같은 내용을 채웁니다. */
+  const inq = $("#inquiry");
+  if (inq) {
+    const say = $(".inq-msg", inq), ta = inq.elements.message, cnt = $(".cnt", inq), send = $(".inq-send", inq);
+    const sendHTML = send.innerHTML;
+    ta.addEventListener("input", () => { cnt.textContent = `${ta.value.length} / 1000`; });
+    $(".more", inq).addEventListener("click", e => {
+      const t = $(".agree-text", inq); t.hidden = !t.hidden;
+      e.currentTarget.setAttribute("aria-expanded", String(!t.hidden));
+      e.currentTarget.textContent = t.hidden ? "내용 보기" : "접기";
+    });
+    const rules = {
+      company: el => el.value.trim() ? "" : "회사·매장명을 적어 주세요.",
+      name: el => el.value.trim() ? "" : "담당자 이름을 적어 주세요.",
+      phone: el => { const d = el.value.replace(/\D/g, ""); return /^[0-9+\-\s()]+$/.test(el.value.trim()) && d.length >= 9 && d.length <= 13 ? "" : "연락처를 확인해 주세요."; },
+      email: el => !el.value.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()) ? "" : "이메일 주소를 확인해 주세요.",
+      message: el => el.value.trim().length >= 5 ? "" : "문의 내용을 5자 이상 적어 주세요.",
+      agree: el => el.checked ? "" : "개인정보 수집·이용에 동의해 주세요.",
+    };
+    const check = el => {
+      const box = el.closest(".f, .agree"), err = rules[el.name](el);
+      box.classList.toggle("err", !!err);
+      el.setAttribute("aria-invalid", err ? "true" : "false");
+      let m = box.querySelector(":scope > .msg");
+      if (!m) { m = document.createElement("small"); m.className = "msg"; box.appendChild(m); }
+      m.textContent = err;
+      return !err;
+    };
+    Object.keys(rules).forEach(n => {
+      const el = inq.elements[n];
+      el.addEventListener(el.type === "checkbox" ? "change" : "blur", () => { if (el.type === "checkbox" || el.value) check(el); });
+      el.addEventListener("input", () => { if (el.closest(".err")) check(el); });
+    });
+    inq.addEventListener("submit", async e => {
+      e.preventDefault();
+      if (inq.elements.website.value) return;              // 자동 등록 막기(사람 눈엔 안 보이는 칸)
+      let first = null;
+      Object.keys(rules).forEach(n => { const el = inq.elements[n]; if (!check(el) && !first) first = el; });
+      if (first) { first.focus(); say.textContent = "빨간 칸을 확인해 주세요."; say.className = "inq-msg bad"; return; }
+      const API = (inq.dataset.api || "").trim();   // 보낼 때마다 읽음
+      const v = n => inq.elements[n].value.trim();
+      const data = {
+        company: v("company"), name: v("name"), phone: v("phone"), email: v("email"),
+        products: $$("input[name=products]:checked", inq).map(c => c.value),
+        message: v("message"), agree: true, page: location.href, sentAt: new Date().toISOString(),
+      };
+      if (!API) {
+        const body = `회사·매장명: ${data.company}\n담당자: ${data.name}\n연락처: ${data.phone}\n이메일: ${data.email || "-"}\n관심 솔루션: ${data.products.join(", ") || "-"}\n\n${data.message}\n\n(개인정보 수집·이용 동의함 · 홈페이지 문의 남기기)`;
+        location.href = `mailto:help@iregen.co.kr?subject=${encodeURIComponent("[홈페이지 문의] " + data.company)}&body=${encodeURIComponent(body)}`;
+        say.textContent = "메일 앱이 열리면 [보내기]를 눌러 주세요."; say.className = "inq-msg";
+        return;
+      }
+      send.disabled = true; send.textContent = "보내는 중…"; say.textContent = ""; say.className = "inq-msg";
+      try {
+        const r = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        inq.classList.add("done");
+      } catch (err) {
+        say.textContent = "보내지 못했어요. 잠시 뒤 다시 보내 주시거나 070-4152-3621 로 전화해 주세요."; say.className = "inq-msg bad";
+      } finally { send.disabled = false; send.innerHTML = sendHTML; }
+    });
+    $(".inq-again", inq).addEventListener("click", () => {
+      inq.reset(); cnt.textContent = "0 / 1000"; say.textContent = ""; inq.classList.remove("done");
+      $$(".err", inq).forEach(b => b.classList.remove("err")); $$(".msg", inq).forEach(m => { m.textContent = ""; });
+    });
+  }
 
   onScroll();
 })();
