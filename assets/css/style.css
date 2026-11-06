@@ -465,7 +465,10 @@ body.nav-open .mnav { transform: none; }
 .sup.big p { color: rgba(255,255,255,.85); }
 .sup.big .ic { background: rgba(255,255,255,.18); color: #fff; }
 .sup.big .go { color: #fff; }
-.sup.big img { position: absolute; right: 10px; bottom: 0; width: 130px; }
+.sup.big img { position: absolute; right: 10px; bottom: 0; width: 130px; pointer-events: none; }
+/* 글자가 캐릭터에 가리지 않게: 설명 글은 캐릭터 폭만큼 비켜 줄바꿈 (11-06) */
+.sup.big p { max-width: calc(100% - 118px); }
+@media (max-width: 760px) { .sup.big img { width: 104px; right: 6px; } .sup.big p { max-width: calc(100% - 92px); } }
 
 /* ---------- CTA ---------- */
 .cta { padding: 0 0 120px; background: var(--navy); }
