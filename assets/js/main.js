@@ -119,8 +119,10 @@
     { key: "pdm", code: "PDM · PACK & LABEL", name: "PDM", sub: "소분·포장", title: "소분·포장·라벨을 한 자리에서", desc: "큰 단위로 들어온 상품을 판매 단위로 나누고, 포장과 가격 라벨 출력, 주문 상품 검수까지 이어 갑니다.", feats: ["큰 단위 → 판매 단위 소분 작업", "가격·중량 라벨 출력", "주문서 출력부터 포장·검수", "소분 결과를 IRM 재고에 반영"], who: ["식자재마트", "정육·반찬", "로컬푸드"], img: "c12_delivery" },
     { key: "scm", code: "SCM · AUTO ORDER", name: "SCM", sub: "자동발주", title: "떨어지기 전에 채우는 자동발주", desc: "재고와 판매 흐름을 보고 발주서를 자동으로 만들어 매입처에 보냅니다. 발주에 쓰던 시간을 줄이고 품절을 막습니다.", feats: ["재고 기준 자동 발주서 생성", "매입처 발주 전송·확인", "발주 계획과 입고 예정 관리", "재고는 줄이고 품절은 막는 적정 재고"], who: ["식자재마트", "대형약국", "다점포 본사"], img: "c15_idea" },
     { key: "esl", code: "ESL · SHELF LABEL", name: "ESL", sub: "전자가격표", title: "가격표를 바꾸는 일이 사라집니다", desc: "IRM에서 가격과 행사를 바꾸면 매대의 전자가격표가 자동으로 바뀝니다. 계산대 가격과 매대 가격이 늘 같습니다.", feats: ["IRM 가격·행사 변경 자동 반영", "종이 가격표 출력·교체 작업 없음", "POS 가격과 매대 가격 일치", "행사 시작·종료에 맞춘 표시"], who: ["대형약국", "식자재마트", "생활용품"], img: "c14_search" },
-    { key: "kiosk", code: "KIOSK · SELF ORDER", name: "키오스크", sub: "셀프 결제", title: "줄은 짧게, 계산대는 여유롭게", desc: "손님이 직접 고르고 결제해 계산대 대기를 줄입니다. POS와 같은 상품·가격·행사를 쓰고 매출은 IRM에 함께 모입니다.", feats: ["셀프 주문·결제", "POS와 같은 상품·가격·행사", "매출을 IRM에서 한 번에 확인", "혼잡 시간대 계산대 부담 분산"], who: ["대형약국", "푸드코트형 매장", "소형 매장"], img: "c04_heart" },
+    { key: "pog", code: "POG · 3D PLANOGRAM", name: "POG", sub: "3D 진열", title: "매장을 3D로 그대로, 진열까지", desc: "매장 도면대로 매대를 배치해 우리 매장을 3D로 똑같이 만들고, 매대마다 상품을 진열해 둡니다. 어느 매대에 무엇이 있는지 화면 속 통로를 걸으며 확인합니다.", feats: ["도면 크기 그대로 매대 배치", "매대 템플릿·진열도 라이브러리", "3D로 통로를 걸으며 진열 확인", "PDA 로케이션과 진열 위치 연동"], who: ["식자재마트", "대형약국", "다점포 본사"], img: "c09_think" },
+    { key: "kiosk", code: "KIOSK · SELF CHECKOUT", name: "키오스크", sub: "셀프 결제", title: "줄은 짧게, 계산대는 여유롭게", desc: "손님이 직접 바코드를 찍고 결제해 계산대 대기를 줄입니다. POS와 같은 상품·가격·행사를 쓰고 매출은 IRM에 함께 모입니다.", feats: ["셀프 계산·결제", "POS와 같은 상품·가격·행사", "매출을 IRM에서 한 번에 확인", "혼잡 시간대 계산대 부담 분산"], who: ["대형약국", "마트·생활용품", "동네 마트"], img: "c04_heart" },
     { key: "online", code: "ONLINE · DELIVERY", name: "온라인·배송", sub: "주문·출고", title: "온라인 주문부터 배송 완료까지", desc: "쇼핑몰·폐쇄몰·전화로 들어온 주문을 받아 주문서 출력, 소분·포장, 검수, 배송 경로 지정과 배송 완료 확인까지 이어 갑니다.", feats: ["쇼핑몰·폐쇄몰·전화 주문 접수", "주문서 출력 → 소분·포장 → 검수", "배송 경로 지정·출발·완료 확인", "온라인 매출과 재고도 IRM에서 함께"], who: ["식자재마트", "업소 배송", "로컬푸드"], img: "c07_walk" },
+    { key: "gw", code: "GROUPWARE · TEAMWORK", name: "그룹웨어", sub: "업무 협업", title: "본사와 매장을 한 팀으로", desc: "전자결재·공지·일정을 한곳에서 처리합니다. 본사의 지시와 매장의 보고가 같은 화면에서 바로 이어집니다.", feats: ["전자결재와 결재선 관리", "본사 공지·매장 게시판", "일정·근태 관리", "본사와 매장 사이 업무 연락"], who: ["다점포 본사", "식자재마트", "대형약국"], img: "c20_support" },
   ];
   const ICONS = {
     pos: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
@@ -130,6 +132,8 @@
     esl: '<rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 11h4M7 14h7"/>',
     kiosk: '<rect x="6" y="2" width="12" height="15" rx="2"/><path d="M12 17v4M8 21h8"/>',
     online: '<path d="M3 7h11v8H3zM14 10h4l3 3v2h-7"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>',
+    pog: '<path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M3 9v6l9 5 9-5V9"/><path d="M12 14v6"/>',
+    gw: '<circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6M12 20c0-3.3 2.7-6 6-6"/>',
   };
   const hubMap = $(".hub-map"), hubPanel = $(".hub-panel");
   if (hubMap) {
@@ -248,6 +252,17 @@
       loops.push(setInterval(() => { sp.forEach((s, i) => s.classList.toggle("pick", i === k % sp.length || i === (k + 2) % sp.length)); k++; }, 900));
     },
     ship(tile) { tile.classList.add("live"); },
+    pog(tile) { const s = $(".pog-shot", tile); if (s) loops.push(setInterval(() => s.classList.toggle("flip"), 3800)); },
+    gw(tile) {
+      const rows = $$(".gw-row", tile); let k = 0;
+      const run = () => {
+        rows.forEach((r, i) => r.classList.toggle("on", i === k % rows.length));
+        const e = $("em", rows[k % rows.length]);
+        if (e && e.textContent === "결재 대기") setTimeout(() => { e.textContent = "승인 완료"; e.classList.add("ok"); }, 900);
+        k++;
+      };
+      run(); loops.push(setInterval(run, 1700));
+    },
     pda() {}, pdm() {},
   };
   const mockObs = new IntersectionObserver(es => es.forEach(e => {
