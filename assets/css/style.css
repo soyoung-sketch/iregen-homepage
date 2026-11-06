@@ -508,6 +508,8 @@ body.nav-open .mnav { transform: none; }
 .ftr .info { margin-top: 28px; display: grid; gap: 6px; line-height: 1.7; }
 .ftr .info span + span::before { content: "|"; margin: 0 10px; opacity: .3; }
 .ftr .copy { margin-top: 26px; font-size: 13px; opacity: .7; }
+.ftr .info a { color: rgba(255,255,255,.85); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.3); }
+.ftr .info a:hover { color: var(--cyan); }
 
 /* ---------- 떠 있는 상담 카드 ---------- */
 .pip { position: fixed; right: 24px; bottom: 24px; z-index: 90; width: 250px; border-radius: 22px; background: #fff; box-shadow: 0 24px 60px -18px rgba(10,20,60,.45); padding: 16px 16px 14px; transform: translateY(140%); opacity: 0; visibility: hidden; transition: transform .7s var(--ease), opacity .4s, visibility 0s .7s; }
