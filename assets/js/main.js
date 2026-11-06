@@ -501,6 +501,7 @@
           $(".inq-no", inq).textContent = Number(row.InquiryId) > 0 ? `접수 번호 ${row.InquiryId}` : "";   // 0 = 봇 칸 등으로 저장 안 됨
           inq.classList.add("done");
           files = []; drawFiles();
+          const cl = $(".inq-close", inq); if (cl) cl.focus({ preventScroll: true });
         } else if ([-1, -22, -23, -24].includes(ret) && row.MsgKr) {
           fail(row.MsgKr, ret === -24);
         } else {
@@ -517,6 +518,38 @@
       files = []; drawFiles(); attErr.textContent = ""; $(".inq-no", inq).textContent = "";
       $$(".err", inq).forEach(b => b.classList.remove("err")); $$(".msg", inq).forEach(m => { m.textContent = ""; });
     });
+
+    /* 팝업으로 열기 (11-06) — [data-inq] 버튼이 엶. 닫기: × · Esc · 바깥 누르기 · 완료 화면 [닫기]
+       쓰던 내용은 닫아도 그대로(다시 열면 이어 씀), 접수 뒤 닫으면 새 양식으로 */
+    const modal = $("#inq-modal");
+    if (modal && typeof modal.showModal === "function") {
+      const fine = matchMedia("(pointer: fine)").matches;      // 휴대폰은 열자마자 자판이 뜨지 않게
+      let downOut = false;
+      const open = () => {
+        if (modal.open) return;
+        modal.classList.remove("closing");
+        document.documentElement.classList.add("inq-lock");
+        modal.showModal();
+        const el = inq.classList.contains("done") ? $(".inq-close", inq) : (fine ? inq.elements.company : null);
+        if (el) el.focus({ preventScroll: true });
+        $(".inq", modal).scrollTop = 0;
+      };
+      const close = () => {
+        if (!modal.open || modal.classList.contains("closing")) return;
+        modal.classList.add("closing");
+        setTimeout(() => { modal.classList.remove("closing"); modal.close(); }, reduce ? 0 : 180);
+      };
+      modal.addEventListener("close", () => {
+        document.documentElement.classList.remove("inq-lock");
+        if (inq.classList.contains("done")) $(".inq-again", inq).click();
+      });
+      modal.addEventListener("cancel", e => { e.preventDefault(); close(); });           // Esc
+      modal.addEventListener("pointerdown", e => { downOut = e.target === modal; });        // 바깥(배경)에서 누르고
+      modal.addEventListener("click", e => { if (e.target === modal && downOut) close(); }); // 바깥에서 뗐을 때만 닫음
+      $(".inq-x", modal).addEventListener("click", close);
+      $(".inq-close", inq).addEventListener("click", close);
+      $$("[data-inq]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); open(); }));
+    }
   }
 
   onScroll();

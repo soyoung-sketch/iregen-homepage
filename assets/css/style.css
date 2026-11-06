@@ -775,3 +775,36 @@ body.nav-open .mnav { transform: none; }
 .inq-done .inq-no { display: block; margin-top: 6px; font-size: 13px; font-weight: 700; color: var(--blue); }
 .inq-done .inq-no:empty { display: none; }
 @media (max-width: 560px) { .inq .att-hint { width: 100%; } .inq .att-list .nm { max-width: 170px; } }
+
+/* 문의 남기기 팝업 (11-06 사용자: 버튼을 누르면 팝업에서 작성) — <dialog class="inq-modal"> 안에 양식 */
+.cta-contact.cta-write { background: #fff; border-color: #fff; color: var(--blue); box-shadow: 0 18px 40px -18px rgba(8,20,70,.55); }
+.cta-contact.cta-write:hover { background: #fff; }
+.cta-contact.cta-write small { color: var(--gray); opacity: 1; }
+.cta-contact.cta-write b { color: var(--ink); }
+html.inq-lock { overflow: hidden; scrollbar-gutter: stable; }
+.inq-modal { width: min(980px, calc(100% - 40px)); max-width: none; max-height: calc(100dvh - 40px); margin: auto; padding: 0; border: 0; background: transparent; color: var(--ink); overflow: visible; }
+.inq-modal[open] { animation: inq-in .42s var(--ease); }
+.inq-modal::backdrop { background: rgba(8,14,40,.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: inq-fade .3s ease; }
+.inq-modal.closing { animation: inq-out .19s ease forwards; }
+.inq-modal.closing::backdrop { animation: inq-fade-out .19s ease forwards; }
+@keyframes inq-in { from { opacity: 0; transform: translateY(22px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes inq-out { to { opacity: 0; transform: translateY(14px) scale(.98); } }
+@keyframes inq-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes inq-fade-out { from { opacity: 1; } to { opacity: 0; } }
+.inq-modal .inq { max-height: calc(100dvh - 40px); overflow-y: auto; overscroll-behavior: contain; box-shadow: 0 40px 90px -30px rgba(5,12,40,.75); }
+.inq-modal .inq-head { padding-right: 56px; }
+.inq-modal .inq-head b { font-size: 24px; }
+.inq-x { position: absolute; z-index: 2; right: 18px; top: 18px; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: var(--ink-2); background: #F1F4FA; transition: background .2s, color .2s, transform .3s var(--ease); }
+.inq-x:hover { background: #E3E8F2; color: var(--ink); transform: rotate(90deg); }
+.inq-x:focus-visible { outline: 3px solid var(--cyan); outline-offset: 2px; }
+.inq-x svg { width: 18px; height: 18px; }
+.inq-done-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+@media (max-width: 560px) {
+  /* 휴대폰: 아래에서 올라오는 시트 */
+  .inq-modal { width: 100%; max-height: calc(100dvh - 24px); margin: auto 0 0; }
+  .inq-modal .inq { max-height: calc(100dvh - 24px); border-radius: 22px 22px 0 0; padding-top: 24px; }
+  .inq-modal .inq-head b { font-size: 21px; }
+  .inq-x { right: 14px; top: 16px; width: 36px; height: 36px; }
+  @keyframes inq-in { from { transform: translateY(60px); opacity: .4; } to { transform: none; opacity: 1; } }
+}
+@media (prefers-reduced-motion: reduce) { .inq-modal[open], .inq-modal::backdrop, .inq-modal.closing, .inq-modal.closing::backdrop { animation: none; } }

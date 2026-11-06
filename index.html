@@ -17,7 +17,7 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/css/style.css?v=30">
+<link rel="stylesheet" href="assets/css/style.css?v=31">
 </head>
 <body>
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -35,7 +35,7 @@
       <a href="#support">고객지원</a>
     </nav>
     <div class="hdr-cta">
-      <a href="#contact" class="btn btn-ghost btn-sm">도입 문의</a>
+      <a href="#contact" class="btn btn-ghost btn-sm" data-inq>도입 문의</a>
       <button class="menu-btn" type="button" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -47,7 +47,7 @@
   <a href="#flow">운영 흐름</a>
   <a href="#process">도입 절차</a>
   <a href="#support">고객지원</a>
-  <a href="#contact" class="btn btn-primary">도입 문의하기</a>
+  <a href="#contact" class="btn btn-primary" data-inq>도입 문의하기</a>
 </nav>
 
 <main>
@@ -74,14 +74,14 @@
         <h1 class="h-display"><span class="line"><span>유통 매장의 모든 것,</span></span><span class="line"><span><span class="grad-text">아이리젠</span> 하나로</span></span></h1>
         <p class="lead">IRM · POS · PDA · PDM · SCM · ESL · POG · 키오스크 · 그룹웨어까지.<br>상품이 들어와 팔려 나가기까지, 유통에 필요한 모든 솔루션을 <b style="color:#fff">한 회사가 만들고, 한 회사가 책임집니다.</b></p>
         <div class="hero-tags"><span class="tag">ERP</span><span class="tag">POS</span><span class="tag">PDA</span><span class="tag">PDM</span><span class="tag">SCM</span><i class="tag-br"></i><span class="tag">ESL</span><span class="tag">POG</span><span class="tag">KIOSK</span><span class="tag">그룹웨어</span><span class="tag">ONLINE · 배송</span></div>
-        <div class="hero-actions"><a href="#contact" class="btn btn-primary">도입 문의하기 <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="#lineup" class="btn btn-ghost">솔루션 둘러보기</a></div>
+        <div class="hero-actions"><a href="#contact" class="btn btn-primary" data-inq>도입 문의하기 <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="#lineup" class="btn btn-ghost">솔루션 둘러보기</a></div>
       </div>
       <div class="hero-slide" data-slide="1" data-photo>
         <span class="eyebrow">iREGEN DEVICES</span>
         <h2 class="h-display"><span class="line"><span>POS부터 키오스크까지,</span></span><span class="line"><span>장비도 <span class="grad-text">아이리젠</span>으로</span></span></h2>
         <p class="lead">POS · 키오스크 · PDA · PDM · 카드 단말기.<br>IRM과 바로 이어지는 장비로 유통 매장을 한 번에 갖춥니다.</p>
         <div class="hero-tags"><span class="tag">POS</span><span class="tag">키오스크</span><span class="tag">PDA</span><span class="tag">PDM</span><span class="tag">카드 단말기</span></div>
-        <div class="hero-actions"><a href="#contact" class="btn btn-primary">장비 구성 문의 <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="#products" class="btn btn-ghost">제품 둘러보기</a></div>
+        <div class="hero-actions"><a href="#contact" class="btn btn-primary" data-inq>장비 구성 문의 <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="#products" class="btn btn-ghost">제품 둘러보기</a></div>
       </div>
       <div class="hero-slide" data-slide="2">
         <span class="eyebrow">FOR FOOD DISTRIBUTION</span>
@@ -453,29 +453,9 @@
         <p>매장 규모와 업종만 알려 주시면 필요한 솔루션과 도입 순서를 함께 정리해 드립니다.</p>
       </div>
       <div class="cta-contacts">
+        <a class="cta-contact cta-write" href="#contact" data-inq><span><small>온라인 문의</small><b>문의 남기기</b></span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></a>
         <a class="cta-contact" href="tel:07041523621"><span><small>전화 문의</small><b>070-4152-3621</b></span><svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
-      <!-- 문의 남기기 — 상담 신청 등록 API(home_inquiry_api.md, 11-06)로 multipart 전송. data-api 가 비면 메일 앱(help@iregen.co.kr)으로.
-           data-key 는 홈페이지 전용 공개 키(이 액션 하나만 부를 수 있음). 접수되면 서비스 포털(support.iregen.co.kr) '상담 신청' 메뉴에 들어감 -->
-      <form class="inq" id="inquiry" data-api="https://restapi.iregen.co.kr/api/v1/SvcSupportInquiry/Iregen_Support_Inquiry_Regist" data-key="9B859EDF-E668-49BB-A287-E257C9718609" data-source="HOME" novalidate aria-label="문의 남기기">
-        <div class="inq-head"><b>문의 남기기</b><small>남겨 주시면 담당자가 확인한 뒤 연락드립니다.</small></div>
-        <div class="inq-grid">
-          <label class="f"><span>회사·매장명 <i>*</i></span><input name="company" maxlength="60" autocomplete="organization" placeholder="예) 행복마트 본점"></label>
-          <label class="f"><span>담당자 <i>*</i></span><input name="name" maxlength="30" autocomplete="name" placeholder="이름"></label>
-          <label class="f"><span>연락처 <i>*</i></span><input name="phone" type="tel" maxlength="20" autocomplete="tel" inputmode="tel" placeholder="010-0000-0000"></label>
-          <label class="f"><span>이메일</span><input name="email" type="email" maxlength="80" autocomplete="email" placeholder="선택"></label>
-        </div>
-        <fieldset class="f chips"><legend>관심 솔루션 <small>여러 개 고를 수 있어요</small></legend><label><input type="checkbox" name="products" value="IRM"><span>IRM</span></label><label><input type="checkbox" name="products" value="POS"><span>POS</span></label><label><input type="checkbox" name="products" value="PDA"><span>PDA</span></label><label><input type="checkbox" name="products" value="PDM"><span>PDM</span></label><label><input type="checkbox" name="products" value="SCM"><span>SCM</span></label><label><input type="checkbox" name="products" value="ESL"><span>ESL</span></label><label><input type="checkbox" name="products" value="POG"><span>POG</span></label><label><input type="checkbox" name="products" value="키오스크"><span>키오스크</span></label><label><input type="checkbox" name="products" value="그룹웨어"><span>그룹웨어</span></label><label><input type="checkbox" name="products" value="온라인·배송"><span>온라인·배송</span></label></fieldset>
-        <div class="f f-msg"><label class="f-lab" for="inq-message">문의 내용 <i>*</i></label><span class="ta"><textarea id="inq-message" name="message" maxlength="1000" rows="4" placeholder="매장 규모와 업종, 지금 불편한 점을 적어 주세요."></textarea><em class="cnt">0 / 1000</em></span>
-          <div class="att"><label class="att-btn"><input type="file" name="file" multiple accept=".pdf,.hwp,.hwpx,.doc,.docx,.pptx,.xls,.xlsx,.csv,.txt,.jpg,.jpeg,.png,.gif,.webp,.bmp,.zip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5.5 5.5 0 01-7.8-7.8l8.6-8.6a3.7 3.7 0 015.2 5.2l-8.6 8.6a1.8 1.8 0 01-2.6-2.6l7.9-7.9"/></svg>파일 첨부</label><small class="att-hint">선택 · 제안서·매장 자료 5개까지, 파일당 20MB</small><ul class="att-list" aria-label="첨부한 파일"></ul><small class="att-err" role="alert"></small></div>
-        </div>
-        <input class="hp" name="Website" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <div class="agree"><label><input type="checkbox" name="agree"><span>개인정보 수집·이용에 동의합니다 <i>*</i></span></label><button type="button" class="more" aria-expanded="false">내용 보기</button></div>
-        <div class="agree-text" hidden><b>수집 항목</b> 회사·매장명, 담당자 이름, 연락처, 이메일, 첨부 파일(보내신 경우) · <b>이용 목적</b> 도입 상담 문의 확인과 회신 · <b>보유 기간</b> 상담을 마친 뒤 1년(요청하시면 바로 지웁니다). 동의하지 않으실 수 있으나 그 경우 이 칸으로는 문의를 보낼 수 없습니다. 전화로도 문의하실 수 있습니다.</div>
-        <p class="inq-msg" role="status" aria-live="polite"></p>
-        <button class="btn btn-primary inq-send" type="submit">문의 보내기 <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="inq-done"><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><b>문의가 접수됐어요</b><p>담당자가 확인한 뒤 남겨 주신 연락처로 연락드릴게요.<small class="inq-no"></small></p><button type="button" class="btn btn-line btn-sm inq-again">다른 문의 쓰기</button></div>
-      </form>
       <img class="mascot" src="assets/char/c04_heart.webp?v=3" alt="" loading="lazy">
     </div>
   </div>
@@ -487,7 +467,7 @@
   <div class="container">
     <div class="top">
       <a href="#top" class="logo" aria-label="아이리젠 홈"><svg class="logo-svg" viewBox="56 62 596 138" role="img" aria-label="iREGEN 아이리젠"><path class="li" d="M75.9,194.8v-85.7h26.7l-14.2,85.7h-12.5Z"/><path class="li" d="M75.9,100.2l-15.3-16.1,15.3-17.3,17.6,17.3-17.6,16.1Z"/><path fill-rule="evenodd" d="M122.6,108.8v86h17.5v-33.5h17l33.5,33.5h24l-36-33h15c2.8-.2,9.2-2.5,12-10.5v-32c-.8-3-4.1-9.3-10.5-10.5h-72.5ZM140.1,123.3v24h43c2-.3,6-2,6-6v-13.5c-.2-1.5-1.6-4.5-6-4.5h-43Z"/><path d="M553.1,194.8v-86h13.5l63,57.5v-57.5h17v86h-11.5l-65-59v59h-17Z"/><path d="M230.1,194.8v-86h79.5v14h-61v20h36v14h-36v22h62v16h-80.5Z"/><path d="M330.1,178.8v-56c1.2-11.6,9.2-14.2,13-14h69.5c6.8,2,10.2,8.2,11,11v9l-18.5,3v-9h-56.5v55.5h56.5v-20h-29v-14h47.5v36c0,9.6-9,13.7-13.5,14.5h-64.5c-10.4,0-14.7-10.6-15.5-16Z"/><path d="M449.6,194.8v-86h81.5v13h-63.5v20h37v14.5h-37v21.5h63.5v17h-81.5Z"/></svg></a>
-      <div class="flinks"><a href="#lineup">솔루션</a><a href="#industry">업종별</a><a href="#process">도입 절차</a><a href="https://help.iregen.co.kr/" target="_blank" rel="noopener">매뉴얼</a><a href="#contact">문의하기</a></div>
+      <div class="flinks"><a href="#lineup">솔루션</a><a href="#industry">업종별</a><a href="#process">도입 절차</a><a href="https://help.iregen.co.kr/" target="_blank" rel="noopener">매뉴얼</a><a href="#contact" data-inq>문의하기</a></div>
     </div>
     <div class="info">
       <p style="margin:0"><span>(주)아이리젠</span><span>대표이사 유동영</span><span>전화 070-4152-3623</span><span>팩스 02-6911-6311</span><span>이메일 <a href="mailto:help@iregen.co.kr">help@iregen.co.kr</a></span></p>
@@ -498,6 +478,32 @@
   </div>
 </footer>
 
+<!-- 문의 남기기 팝업 (11-06) — [data-inq] 버튼(도입 문의·상담 신청하기·문의 남기기 등)이 엶. 닫기: × · Esc · 바깥 누르기. 쓰던 내용은 닫아도 남음 -->
+<dialog class="inq-modal" id="inq-modal" aria-labelledby="inq-title">
+  <button class="inq-x" type="button" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <!-- 문의 남기기 — 상담 신청 등록 API(home_inquiry_api.md, 11-06)로 multipart 전송. data-api 가 비면 메일 앱(help@iregen.co.kr)으로.
+       data-key 는 홈페이지 전용 공개 키(이 액션 하나만 부를 수 있음). 접수되면 서비스 포털(support.iregen.co.kr) '상담 신청' 메뉴에 들어감 -->
+  <form class="inq" id="inquiry" data-api="https://restapi.iregen.co.kr/api/v1/SvcSupportInquiry/Iregen_Support_Inquiry_Regist" data-key="9B859EDF-E668-49BB-A287-E257C9718609" data-source="HOME" novalidate aria-label="문의 남기기">
+    <div class="inq-head"><b id="inq-title">문의 남기기</b><small>남겨 주시면 담당자가 확인한 뒤 연락드립니다.</small></div>
+    <div class="inq-grid">
+      <label class="f"><span>회사·매장명 <i>*</i></span><input name="company" maxlength="60" autocomplete="organization" placeholder="예) 행복마트 본점"></label>
+      <label class="f"><span>담당자 <i>*</i></span><input name="name" maxlength="30" autocomplete="name" placeholder="이름"></label>
+      <label class="f"><span>연락처 <i>*</i></span><input name="phone" type="tel" maxlength="20" autocomplete="tel" inputmode="tel" placeholder="010-0000-0000"></label>
+      <label class="f"><span>이메일</span><input name="email" type="email" maxlength="80" autocomplete="email" placeholder="선택"></label>
+    </div>
+    <fieldset class="f chips"><legend>관심 솔루션 <small>여러 개 고를 수 있어요</small></legend><label><input type="checkbox" name="products" value="IRM"><span>IRM</span></label><label><input type="checkbox" name="products" value="POS"><span>POS</span></label><label><input type="checkbox" name="products" value="PDA"><span>PDA</span></label><label><input type="checkbox" name="products" value="PDM"><span>PDM</span></label><label><input type="checkbox" name="products" value="SCM"><span>SCM</span></label><label><input type="checkbox" name="products" value="ESL"><span>ESL</span></label><label><input type="checkbox" name="products" value="POG"><span>POG</span></label><label><input type="checkbox" name="products" value="키오스크"><span>키오스크</span></label><label><input type="checkbox" name="products" value="그룹웨어"><span>그룹웨어</span></label><label><input type="checkbox" name="products" value="온라인·배송"><span>온라인·배송</span></label></fieldset>
+    <div class="f f-msg"><label class="f-lab" for="inq-message">문의 내용 <i>*</i></label><span class="ta"><textarea id="inq-message" name="message" maxlength="1000" rows="4" placeholder="매장 규모와 업종, 지금 불편한 점을 적어 주세요."></textarea><em class="cnt">0 / 1000</em></span>
+      <div class="att"><label class="att-btn"><input type="file" name="file" multiple accept=".pdf,.hwp,.hwpx,.doc,.docx,.pptx,.xls,.xlsx,.csv,.txt,.jpg,.jpeg,.png,.gif,.webp,.bmp,.zip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5.5 5.5 0 01-7.8-7.8l8.6-8.6a3.7 3.7 0 015.2 5.2l-8.6 8.6a1.8 1.8 0 01-2.6-2.6l7.9-7.9"/></svg>파일 첨부</label><small class="att-hint">선택 · 제안서·매장 자료 5개까지, 파일당 20MB</small><ul class="att-list" aria-label="첨부한 파일"></ul><small class="att-err" role="alert"></small></div>
+    </div>
+    <input class="hp" name="Website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="agree"><label><input type="checkbox" name="agree"><span>개인정보 수집·이용에 동의합니다 <i>*</i></span></label><button type="button" class="more" aria-expanded="false">내용 보기</button></div>
+    <div class="agree-text" hidden><b>수집 항목</b> 회사·매장명, 담당자 이름, 연락처, 이메일, 첨부 파일(보내신 경우) · <b>이용 목적</b> 도입 상담 문의 확인과 회신 · <b>보유 기간</b> 상담을 마친 뒤 1년(요청하시면 바로 지웁니다). 동의하지 않으실 수 있으나 그 경우 이 칸으로는 문의를 보낼 수 없습니다. 전화로도 문의하실 수 있습니다.</div>
+    <p class="inq-msg" role="status" aria-live="polite"></p>
+    <button class="btn btn-primary inq-send" type="submit">문의 보내기 <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="inq-done"><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><b>문의가 접수됐어요</b><p>담당자가 확인한 뒤 남겨 주신 연락처로 연락드릴게요.<small class="inq-no"></small></p><div class="inq-done-btns"><button type="button" class="btn btn-line btn-sm inq-again">다른 문의 쓰기</button><button type="button" class="btn btn-primary btn-sm inq-close">닫기</button></div></div>
+  </form>
+</dialog>
+
 <!-- 맨 위로 (상담 카드가 보일 땐 캐릭터 얼굴 왼쪽, 아닐 땐 오른쪽 아래) -->
 <button class="to-top" type="button" aria-label="맨 위로" title="맨 위로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg></button>
 <!-- 떠 있는 상담 카드 -->
@@ -506,9 +512,9 @@
   <img src="assets/char/c02_wave.webp?v=3" alt="">
   <small>매장 운영, 어디서부터?</small>
   <b>도입 상담은 <em>아이리젠</em></b>
-  <a href="#contact" class="btn btn-primary">상담 신청하기</a>
+  <a href="#contact" class="btn btn-primary" data-inq>상담 신청하기</a>
 </aside>
 
-<script src="assets/js/main.js?v=17"></script>
+<script src="assets/js/main.js?v=18"></script>
 </body>
 </html>
