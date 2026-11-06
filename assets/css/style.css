@@ -414,15 +414,24 @@ body.nav-open .mnav { transform: none; }
 .kiosk-base { width: 110px; height: 10px; margin: 0 auto; border-radius: 6px; background: #C7CFDF; }
 
 /* 온라인·배송 */
-.ship { position: relative; height: 150px; }
-.ship svg { width: 100%; height: 100%; }
-.ship .route { fill: none; stroke: #C9D5FF; stroke-width: 3; stroke-dasharray: 2 8; stroke-linecap: round; }
-.ship .route-on { fill: none; stroke: var(--blue); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 600; stroke-dashoffset: 600; }
-.live .ship .route-on { animation: route 3.6s var(--ease) infinite; }
-@keyframes route { 70%, 100% { stroke-dashoffset: 0; } }
-.ship .pin { fill: var(--blue); }
-.ship text { font-size: 12px; font-weight: 800; fill: var(--ink-2); font-family: inherit; }
-.ship text.done { fill: var(--blue); }
+.ship { position: relative; aspect-ratio: 2 / 1; max-height: 190px; }
+.ship svg { width: 100%; height: 100%; overflow: visible; }
+.ship .area { fill: url(#shipArea); }
+.ship .base { fill: none; stroke: #D3DDFF; stroke-width: 3; stroke-dasharray: 1 7; stroke-linecap: round; }
+.ship .prog { fill: none; stroke: url(#shipLine); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.ship .stop .dot { fill: #fff; stroke: #C9D5FF; stroke-width: 3; transition: fill .35s, stroke .35s; }
+.ship .stop .halo { fill: var(--blue); opacity: 0; transform: scale(.4); transform-box: fill-box; transform-origin: center; transition: opacity .4s, transform .6s var(--ease); }
+.ship .stop.on .dot { fill: var(--blue); stroke: #fff; }
+.ship .stop.on .halo { opacity: .14; transform: scale(1); }
+.ship .stop text { font-size: 11.5px; font-weight: 800; fill: #A3ABBC; text-anchor: middle; font-family: inherit; transition: fill .35s; }
+.ship .stop.on text { fill: var(--ink-2); }
+.ship .stop.end.on text { fill: var(--blue); }
+.ship .chk { fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity .3s .15s; }
+.ship .stop.end.on .chk { opacity: 1; }
+.ship .car { transition: opacity .25s; }
+.ship .car .core { fill: #fff; stroke: var(--blue); stroke-width: 3; }
+.ship .car .glow { fill: var(--blue); transform-box: fill-box; transform-origin: center; animation: carGlow 1.3s ease-out infinite; }
+@keyframes carGlow { from { transform: scale(.6); opacity: .32; } to { transform: scale(1.7); opacity: 0; } }
 
 /* ---------- 강점 ---------- */
 .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 60px; }

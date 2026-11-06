@@ -251,7 +251,49 @@
       const sp = $$(".kiosk-screen span:not(.pay)", tile); let k = 0;
       loops.push(setInterval(() => { sp.forEach((s, i) => s.classList.toggle("pick", i === k % sp.length || i === (k + 2) % sp.length)); k++; }, 900));
     },
-    ship(tile) { tile.classList.add("live"); },
+    ship(tile) {
+      const svg = $(".ship svg", tile); if (!svg) return;
+      const on = $(".prog", svg), area = $(".area", svg), car = $(".car", svg), clip = $(".clip", svg), stops = $$(".stop", svg);
+      const L = on.getTotalLength();
+      on.style.strokeDasharray = `${L} ${L}`;
+      // 단계마다 경로 위 길이
+      const pos = stops.map(st => {
+        const x = +st.dataset.x, y = +st.dataset.y; let best = 0, bd = Infinity;
+        for (let l = 0; l <= L; l += 0.5) { const q = on.getPointAtLength(l), d = (q.x - x) ** 2 + (q.y - y) ** 2; if (d < bd) { bd = d; best = l; } }
+        return best;
+      });
+      const last = pos.length - 1;
+      const set = (l, lit) => {
+        const q = on.getPointAtLength(l);
+        on.style.strokeDashoffset = L - l;
+        clip.setAttribute("width", q.x.toFixed(1));
+        car.setAttribute("transform", `translate(${q.x.toFixed(1)} ${q.y.toFixed(1)})`);
+        stops.forEach((st, i) => st.classList.toggle("on", lit && l >= pos[i] - 0.5));
+        car.style.opacity = lit && l < pos[last] - 0.5 ? 1 : 0;
+      };
+      if (reduce) { set(pos[last], true); return; }
+      const MOVE = 900, HOLD = 420, END = 1800, FADE = 500;
+      const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      const legs = []; let t = 0;
+      for (let i = 1; i <= last; i++) { legs.push({ t0: t, a: pos[i - 1], b: pos[i] }); t += MOVE + HOLD; }
+      const total = t - HOLD + END + FADE;
+      let vis = false, raf = 0; const start = performance.now();
+      const frame = now => {
+        raf = 0; if (!vis) return;
+        const e = (now - start) % total, fading = e > total - FADE;
+        let l = pos[0];
+        for (const g of legs) {
+          if (e >= g.t0 + MOVE) { l = g.b; continue; }
+          if (e > g.t0) l = g.a + (g.b - g.a) * ease((e - g.t0) / MOVE);
+          break;
+        }
+        set(l, !fading);
+        const o = fading ? Math.max(0, 1 - (e - (total - FADE)) / FADE) : 1;
+        on.style.opacity = o; area.style.opacity = o;
+        raf = requestAnimationFrame(frame);
+      };
+      new IntersectionObserver(es => { vis = es[0].isIntersecting; if (vis && !raf) raf = requestAnimationFrame(frame); }).observe(tile);
+    },
     pog(tile) { const s = $(".pog-shot", tile); if (s) loops.push(setInterval(() => s.classList.toggle("flip"), 3800)); },
     gw(tile) {
       const pad = n => String(n).padStart(2, "0");
