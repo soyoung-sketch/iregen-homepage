@@ -217,6 +217,7 @@ body.nav-open .mnav { transform: none; }
 .intro-visual .big-quote s { color: var(--gray-2); text-decoration-thickness: 3px; text-decoration-color: rgba(240,68,56,.75); }
 .intro-chars { display: flex; align-items: flex-end; gap: 18px; margin-top: 36px; }
 .intro-chars img { width: 120px; }
+.intro-chars img.ic-think { width: 95px; } /* 11-06 옆 캐릭터 조각을 잘라 그림 폭이 345→273: 캐릭터 크기는 그대로 */
 .intro-chars .bubble { position: relative; padding: 14px 18px; border-radius: 18px; background: var(--blue); color: #fff; font-weight: 700; font-size: 15px; margin-bottom: 70px; box-shadow: var(--shadow); }
 .intro-chars .bubble::after { content: ""; position: absolute; left: -8px; bottom: 16px; border: 9px solid transparent; border-right-color: var(--blue); border-left: 0; }
 
@@ -579,6 +580,7 @@ body.nav-open .mnav { transform: none; }
   .pip .x { right: -6px; top: -6px; width: 22px; height: 22px; font-size: 12px; }
   .intro-chars { gap: 10px; }
   .intro-chars img { width: 78px; }
+  .intro-chars img.ic-think { width: 62px; }
   .intro-chars .bubble { font-size: 13.5px; padding: 11px 14px; margin-bottom: 46px; }
   .flow-card p { padding-right: 62px; }
   .flow-card .ill { width: 70px; }
