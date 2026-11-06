@@ -489,7 +489,7 @@ body.nav-open .mnav { transform: none; }
 
 /* ---------- CTA ---------- */
 .cta { padding: 0 0 120px; background: var(--navy); }
-.cta-box { position: relative; border-radius: 36px; padding: 80px 72px; overflow: visible; background: radial-gradient(600px 400px at 85% 0%, rgba(25,195,245,.55), transparent 60%), linear-gradient(120deg, #2F55FF, #4B74FF 55%, #2E9BFF); color: #fff; display: grid; grid-template-columns: 1fr 1.08fr; gap: 48px; align-items: start; }
+.cta-box { position: relative; border-radius: 36px; padding: 80px 72px; overflow: visible; background: radial-gradient(600px 400px at 85% 0%, rgba(25,195,245,.55), transparent 60%), linear-gradient(120deg, #2F55FF, #4B74FF 55%, #2E9BFF); color: #fff; display: grid; grid-template-columns: 1fr minmax(300px, 400px); column-gap: 48px; row-gap: 40px; align-items: end; }
 .cta-box h2 { font-size: clamp(30px, 3.6vw, 50px); line-height: 1.25; letter-spacing: -0.04em; margin: 0; font-weight: 800; }
 .cta-box p { margin: 16px 0 0; color: rgba(255,255,255,.85); }
 .cta-contacts { display: grid; gap: 12px; }
@@ -668,7 +668,6 @@ body.nav-open .mnav { transform: none; }
 @media (max-width: 760px) { .hero-tags .tag-br { display: none; } }
 
 /* 문의 남기기 (11-06) */
-.cta-copy .cta-contacts { margin-top: 34px; }
 .cta-copy .cta-contact b { font-size: 20px; }
 .inq { position: relative; background: #fff; color: var(--ink); border-radius: 26px; padding: 28px 28px 26px; box-shadow: 0 30px 60px -28px rgba(8,20,70,.55); display: grid; gap: 14px; }
 .inq-head b { display: block; font-size: 21px; letter-spacing: -0.03em; }
@@ -676,7 +675,7 @@ body.nav-open .mnav { transform: none; }
 .inq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .inq .f { display: grid; gap: 6px; margin: 0; padding: 0; border: 0; min-width: 0; position: relative; align-content: start; }
 .inq .ta { position: relative; display: block; }
-.cta-copy { align-self: center; }
+.cta-copy { align-self: end; }
 .inq .f > span, .inq legend { font-size: 13px; font-weight: 700; color: var(--ink-2); padding: 0; }
 .inq .f i, .inq .agree i { font-style: normal; color: #E5484D; }
 .inq legend small { font-weight: 600; color: var(--gray); margin-left: 4px; }
@@ -728,3 +727,27 @@ body.nav-open .mnav { transform: none; }
 .to-top svg { width: 21px; height: 21px; }
 @media (max-width: 760px) { .to-top { right: 14px; bottom: 14px; width: 44px; height: 44px; } }
 @media (prefers-reduced-motion: reduce) { .to-top { transition: opacity .2s, visibility 0s; } }
+
+/* 문의 카드 가로형 (11-06) — 넓은 화면: 안쪽 2단(왼쪽 입력칸·솔루션 / 오른쪽 문의 내용), 아래 줄 동의 + 보내기 */
+.cta-box > .inq { grid-column: 1 / -1; }
+@media (min-width: 900px) {
+  .inq { grid-template-columns: 1fr 1fr; column-gap: 26px; row-gap: 14px; padding: 30px 32px 28px;
+    grid-template-areas: "head head" "fields msg" "chips msg" "agree send" "atext atext" "say say"; }
+  .inq-head { grid-area: head; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .inq-grid { grid-area: fields; }
+  .inq .chips { grid-area: chips; }
+  .inq .f-msg { grid-area: msg; display: flex; flex-direction: column; gap: 6px; }
+  .inq .f-msg .ta { flex: 1; display: flex; }
+  .inq .f-msg textarea { flex: 1; height: auto; min-height: 120px; resize: none; }
+  .inq .agree { grid-area: agree; align-self: center; justify-content: flex-start; gap: 14px; }
+  .inq .agree-text { grid-area: atext; margin: 0; }
+  .inq-msg { grid-area: say; }
+  .inq-send { grid-area: send; }
+  .inq .hp { grid-area: say; }
+  .inq-done { grid-column: 1 / -1; }
+}
+@media (max-width: 1024px) {
+  .cta-box { align-items: start; }
+  .cta-copy { align-self: start; }
+  .cta-box > .cta-contacts { max-width: 420px; width: 100%; }
+}

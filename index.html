@@ -17,7 +17,7 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/css/style.css?v=27">
+<link rel="stylesheet" href="assets/css/style.css?v=29">
 </head>
 <body>
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -451,9 +451,9 @@
         <span class="eyebrow" style="color:#CFF3FF">CONTACT US</span>
         <h2>우리 매장에 꼭 맞는 구성,<br>지금 물어보세요</h2>
         <p>매장 규모와 업종만 알려 주시면 필요한 솔루션과 도입 순서를 함께 정리해 드립니다.</p>
-        <div class="cta-contacts">
+      </div>
+      <div class="cta-contacts">
         <a class="cta-contact" href="tel:07041523621"><span><small>전화 문의</small><b>070-4152-3621</b></span><svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
       </div>
       <!-- 문의 남기기 — 받는 주소(API)는 data-api 에 넣으면 그리로 보냄(POST JSON). 비어 있으면 메일 앱(help@iregen.co.kr)으로 -->
       <form class="inq" id="inquiry" data-api="" novalidate aria-label="문의 남기기">
@@ -465,7 +465,7 @@
           <label class="f"><span>이메일</span><input name="email" type="email" maxlength="80" autocomplete="email" placeholder="선택"></label>
         </div>
         <fieldset class="f chips"><legend>관심 솔루션 <small>여러 개 고를 수 있어요</small></legend><label><input type="checkbox" name="products" value="IRM"><span>IRM</span></label><label><input type="checkbox" name="products" value="POS"><span>POS</span></label><label><input type="checkbox" name="products" value="PDA"><span>PDA</span></label><label><input type="checkbox" name="products" value="PDM"><span>PDM</span></label><label><input type="checkbox" name="products" value="SCM"><span>SCM</span></label><label><input type="checkbox" name="products" value="ESL"><span>ESL</span></label><label><input type="checkbox" name="products" value="POG"><span>POG</span></label><label><input type="checkbox" name="products" value="키오스크"><span>키오스크</span></label><label><input type="checkbox" name="products" value="그룹웨어"><span>그룹웨어</span></label><label><input type="checkbox" name="products" value="온라인·배송"><span>온라인·배송</span></label></fieldset>
-        <label class="f"><span>문의 내용 <i>*</i></span><span class="ta"><textarea name="message" maxlength="1000" rows="4" placeholder="매장 규모와 업종, 지금 불편한 점을 적어 주세요."></textarea><em class="cnt">0 / 1000</em></span></label>
+        <label class="f f-msg"><span>문의 내용 <i>*</i></span><span class="ta"><textarea name="message" maxlength="1000" rows="4" placeholder="매장 규모와 업종, 지금 불편한 점을 적어 주세요."></textarea><em class="cnt">0 / 1000</em></span></label>
         <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="agree"><label><input type="checkbox" name="agree"><span>개인정보 수집·이용에 동의합니다 <i>*</i></span></label><button type="button" class="more" aria-expanded="false">내용 보기</button></div>
         <div class="agree-text" hidden><b>수집 항목</b> 회사·매장명, 담당자 이름, 연락처, 이메일 · <b>이용 목적</b> 도입 상담 문의 확인과 회신 · <b>보유 기간</b> 상담을 마친 뒤 1년(요청하시면 바로 지웁니다). 동의하지 않으실 수 있으나 그 경우 이 칸으로는 문의를 보낼 수 없습니다. 전화로도 문의하실 수 있습니다.</div>
